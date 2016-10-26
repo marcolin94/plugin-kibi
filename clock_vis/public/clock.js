@@ -14,6 +14,12 @@ define(function(require) {
   		};
   		setTime();
 
+
+      $scope.addDays = function(days){
+        	$scope.time = Date.now();
+          $scope.time = $scope.time+ days;
+      };
+
   	});
   //the provider that return the visualization
   function ClockProvider(Private) {
