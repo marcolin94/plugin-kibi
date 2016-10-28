@@ -5,22 +5,67 @@ define(function(require) {
 
   //Angular module per il plugin
   var module = require('ui/modules').get('clock_vis');
+
+  module.run(function($rootScope) {
+    var init = function () {
+      $rootScope.flag = true;
+      $rootScope.timeAdd= new Date();
+      $rootScope.time = new Date();
+      $rootScope.number_pass = 0;
+    };
+    init();
+
+  });
+
   //Controller per il module
-  	module.controller('ClockController', function($scope, $timeout) {
+	module.controller('ClockController', function($scope, $timeout, $rootScope) {
 
-  		var setTime = function() {
-  			$scope.time = Date.now();
-  			$timeout(setTime, 1000);
-  		};
-  		setTime();
+    var select;
 
+		var setTime = function() {
+      if($rootScope.flag== undefined || $rootScope.flag){
+        $rootScope.time = Date.now();
+        $timeout(setTime, 1000);
+      }
+		};
+    setTime();
 
-      $scope.addDays = function(days){
-        	$scope.time = Date.now();
-          $scope.time = $scope.time+ days;
-      };
+    $scope.changeFlag = function(flag){
+      $rootScope.flag= flag;
+      setTime();
+    };
 
-  	});
+    $scope.addDays = function(addDays){
+      $rootScope.timeAdd.setDate($rootScope.timeAdd.getDate() + addDays);
+    };
+
+    $scope.getSelectOption = function(selectOption){
+      select = selectOption;
+    };
+
+    $scope.add = function(add){
+
+      switch(select){
+        case "dd":
+            $rootScope.timeAdd.setDate($rootScope.timeAdd.getDate() + add);
+          break;
+
+        case "mm":
+            $rootScope.timeAdd.setMonth($rootScope.timeAdd.getMonth() + add);
+          break;
+
+        case "yy":
+            $rootScope.timeAdd.setYear($rootScope.timeAdd.getYear() + add);
+          break;
+      }
+      $rootScope.timeAdd.setMonth($rootScope.timeAdd.getMonth() + addDays);
+    };
+
+    $scope.muoseOver = function (){
+      $rootScope.number_pass = $rootScope.number_pass + 1;
+    };
+  });
+
   //the provider that return the visualization
   function ClockProvider(Private) {
     var TemplateVisType = Private(require('ui/template_vis_type/TemplateVisType'));

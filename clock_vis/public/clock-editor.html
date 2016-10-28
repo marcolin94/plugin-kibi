@@ -4,7 +4,35 @@
 </div>
 
 <div class="form-group" ng-controller="ClockController">
+
+  <h3 ng-mousemove="muoseOver($event)">Change Format If Pass over ME!</h3>
+  <br>
+
   <label> Add Day </label>
   <input type="number" ng-model="countAddDays"  class="form-control"/>
   <button ng-click="addDays(countAddDays)">Add Days </button>
+  <br>
+
+  <label> What Add?</label>
+  <select name="singleSelect" id="singleSelect" ng-model="singleSelect" ng-change="getSelectOption(singleSelect)">
+      <option value="">---Please select---</option> <!-- not selected / blank option -->
+      <option value="dd">Day</option>
+      <option value="mm">Month</option>
+      <option value="yy">Year</option>
+  </select>
+  <input type="number" ng-model="countAdd" class="form-control">
+  <button ng-click="add(countAdd)">Add</button>
+  <br>
+
+
+  <h3><label> Block Clock </label></h3>
+  <input type="checkbox" ng-model="flag" ng-click="changeFlag(flag)" checked/>
+
+
+  <div class="clockVis" >
+    {{time | date: vis.params.format}}
+  </div>
+  <div class="clockVis" >
+    {{timeAdd | date: vis.params.format}}
+  </div>
 </div>

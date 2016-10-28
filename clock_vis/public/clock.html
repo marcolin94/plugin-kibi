@@ -1,3 +1,14 @@
-<div class="clockVis" ng-controller="ClockController">
-  {{time | date: vis.params.format}}
+
+<body ng-controller="ClockController">
+
+  <div class="clockVis">
+    {{time | date: vis.params.format}}
+  </div>
+  <div class="clockVis">
+    {{ number_pass}}
+  </div>
+</body>
+
+<div class="clockVis" >
+  {{timeAdd | date: vis.params.format}}
 </div>
